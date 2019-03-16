@@ -36,7 +36,8 @@ class Search extends Component {
         this.props.getImages(q, center, location, year_start, year_end, page);
     }
 
-    showHide = () => {
+    showHide = (e) => {
+        e.preventDefault();
         if (this.state.hidden === ''){
             this.setState({
                 hidden: 'hidden',

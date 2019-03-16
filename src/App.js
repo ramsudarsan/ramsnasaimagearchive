@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import Welcome from './components/Welcome/Welcome';
 import Search from './components/Search/Search';
 import Results from './components/Results/Results';
+import CardModal from './components/CardModal/CardModal';
 
 
 class App extends Component {
@@ -15,7 +16,13 @@ class App extends Component {
       results: [],
       hasNext: false,
       hasPrev: false,
-      currPage: 1
+      currPage: 1,
+      showModal: false,
+      image: '',
+      description: '',
+      title: '',
+      center: '',
+      date: ''
     }
   }
 
@@ -28,7 +35,10 @@ class App extends Component {
     const checkend = (year_end === '' || year_end === undefined);
     const checkpage = (page === '' || page === undefined);
 
-    if (checkq && checkcenter && checklocation && checkstart && checkend && checkpage) {
+    if (q === undefined && center === undefined && location === undefined && year_start === undefined && year_end === undefined && page === undefined) {
+      queryString = '';
+    }
+    else if (checkq && checkcenter && checklocation && checkstart && checkend && checkpage) {
       queryString = '?media_type=image';
     } else {
       if (!checkq) {
@@ -83,16 +93,33 @@ class App extends Component {
       });
   }
 
+  showCardModal = (image, title, description, center, date) => {
+    console.log(image);
+    fetch(image)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        image: data[0],
+        showModal: true,
+        title: title,
+        description: description,
+        center: center,
+        date: date
+      });
+    })
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
+          <CardModal show={this.state.showModal} image={this.state.image} title={this.state.title} description={this.state.description} center={this.state.center} date={this.state.date}/>
           <Header signedIn={this.state.signedIn} />
           <Route path="/" exact strict component={Welcome} />
           <Route path="/search" exact render={(props) => (
             <div>
               <Search getImages={this.getImages} {...props} />
-              <Results results={this.state.results} hasNext={this.state.hasNext} hasPrev={this.state.hasPrev} />
+              <Results results={this.state.results} hasNext={this.state.hasNext} hasPrev={this.state.hasPrev} showInfo = {this.showCardModal} />
             </div>
           )} />
         </div>

@@ -40,7 +40,7 @@ class ResultCard extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    image: data[4]
+                    image: data[data.length-2]
                 })
             });
     }
@@ -49,8 +49,11 @@ class ResultCard extends Component {
         if (this.state.image === undefined) {
             return (null);
         }
+        if (this.props.image.includes("nasa.gov/video")){
+            return (null);
+        }
         return (
-            <div className="resultCard" >
+            <div className="resultCard" onClick={() => this.props.showInfo(this.props.image, this.state.title, this.props.description, this.props.center, this.props.date.substring(0,10))} >
                 <div className="imageHalf">
                     <img className="imageResult" src={this.state.image} />
                 </div>
