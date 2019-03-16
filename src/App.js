@@ -1,26 +1,102 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
+import Header from './components/Header/Header';
+import Welcome from './components/Welcome/Welcome';
+import Search from './components/Search/Search';
+import Results from './components/Results/Results';
+
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      signedIn: false,
+      results: [],
+      hasNext: false,
+      hasPrev: false,
+      currPage: 1
+    }
+  }
+
+  getImages = (q, center, location, year_start, year_end, page) => {
+    let queryString = '?';
+    const checkq = (q === '' || q === undefined);
+    const checkcenter = (center === '' || center === undefined);
+    const checklocation = (location === '' || location === undefined);
+    const checkstart = (year_start === '' || year_start === undefined);
+    const checkend = (year_end === '' || year_end === undefined);
+    const checkpage = (page === '' || page === undefined);
+
+    if (checkq && checkcenter && checklocation && checkstart && checkend && checkpage) {
+      queryString = '?media_type=image';
+    } else {
+      if (!checkq) {
+        queryString = queryString + "q=" + q + "&";
+      }
+      if (!checkcenter) {
+        queryString = queryString + "center=" + center + "&";
+      }
+      if (!checklocation) {
+        queryString = queryString + "location=" + location + "&";
+      }
+      if (!checkstart) {
+        queryString = queryString + "year_start=" + year_start + "&";
+      }
+      if (!checkend) {
+        queryString = queryString + "year_end=" + year_end + "&";
+      }
+      if (!checkpage) {
+        queryString = queryString + "page=" + page + "&";
+      }
+    }
+
+    fetch(`https://images-api.nasa.gov/search${queryString}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.collection);
+        let hasNext = false;
+        let hasPrev = false;
+        if (data.collection.links === undefined) {
+
+        }
+        else if (data.collection.links[1] !== undefined) {
+          hasNext = true;
+          hasPrev = true;
+        } else {
+          if (data.collection.links[0].rel === "next") {
+            hasNext = true;
+          } else if (data.collection.links[0].rel === "prev") {
+            hasPrev = true;
+          }
+        }
+        this.setState({
+          results: data.collection.items,
+          hasNext: hasNext,
+          hasPrev: hasPrev
+        })
+      })
+      .catch(() => {
+        this.setState({
+          results: []
+        })
+      });
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="App">
+          <Header signedIn={this.state.signedIn} />
+          <Route path="/" exact strict component={Welcome} />
+          <Route path="/search" exact render={(props) => (
+            <div>
+              <Search getImages={this.getImages} {...props} />
+              <Results results={this.state.results} hasNext={this.state.hasNext} hasPrev={this.state.hasPrev} />
+            </div>
+          )} />
+        </div>
+      </Router>
     );
   }
 }

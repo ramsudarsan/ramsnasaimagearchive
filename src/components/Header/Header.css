@@ -1,0 +1,45 @@
+.headersplit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #fff;
+    width: 100%;
+}
+
+.logo {
+    flex: 1 1 0;
+    margin: 5px;
+    color: #061f4a;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.orange {
+    color:#dd361c;
+}
+
+.links {
+    flex: 1 1 0;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.linkslist {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.listitem {
+    margin: 0px 10px;
+    color: fff;
+}
