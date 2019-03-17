@@ -13,34 +13,57 @@ class App extends Component {
     super();
     this.state = {
       signedIn: false,
-      results: [],
+      results: 'none',
       hasNext: false,
       hasPrev: false,
       currPage: 1,
       showModal: false,
-      image: '',
-      description: '',
-      title: '',
-      center: '',
-      date: ''
+      modalImage: '',
+      modalDescription: '',
+      modalTitle: '',
+      modalCenter: '',
+      modalDate: '',
+      q:'',
+      center:'',
+      location:'',
+      year_start:'',
+      year_end:''
     }
   }
-
+  getPrevImages = () => {
+    const newPage = this.state.currPage - 1;
+    this.getImages(this.state.q, this.state.center, this.state.location, this.state.year_start, this.state.year_end, newPage); 
+    
+  }
+  getNextImages = () => {
+    const newPage = this.state.currPage + 1;
+    this.getImages(this.state.q, this.state.center, this.state.location, this.state.year_start, this.state.year_end, newPage); 
+  }
   getImages = (q, center, location, year_start, year_end, page) => {
     let queryString = '?';
+    let results = [];
     const checkq = (q === '' || q === undefined);
     const checkcenter = (center === '' || center === undefined);
     const checklocation = (location === '' || location === undefined);
     const checkstart = (year_start === '' || year_start === undefined);
     const checkend = (year_end === '' || year_end === undefined);
     const checkpage = (page === '' || page === undefined);
-
-    if (q === undefined && center === undefined && location === undefined && year_start === undefined && year_end === undefined && page === undefined) {
-      queryString = '';
+    let getpage = 1;
+    if (!checkpage) {
+      getpage = page;
     }
-    else if (checkq && checkcenter && checklocation && checkstart && checkend && checkpage) {
+    if (q === undefined && center === undefined && location === undefined && year_start === undefined && year_end === undefined) {
+      queryString = '';
+      results = 'none';
+    }
+    else if (checkq && checkcenter && checklocation && checkstart && checkend) {
       queryString = '?media_type=image';
+      if (!checkpage){
+        queryString += `&page=${getpage}`;
+      }
+      results = [];
     } else {
+      results = [];
       if (!checkq) {
         queryString = queryString + "q=" + q + "&";
       }
@@ -83,43 +106,62 @@ class App extends Component {
         this.setState({
           results: data.collection.items,
           hasNext: hasNext,
-          hasPrev: hasPrev
+          hasPrev: hasPrev,
+          q: q,
+          center: center,
+          location: location,
+          year_start: year_start,
+          year_end: year_end,
+          currPage: getpage
         })
       })
       .catch(() => {
         this.setState({
-          results: []
-        })
+          results: results,
+          q: q,
+          center: center,
+          location: location,
+          year_start: year_start,
+          year_end: year_end,
+          currPage: getpage
+        });
       });
   }
 
   showCardModal = (image, title, description, center, date) => {
-    console.log(image);
+    // console.log(image);
     fetch(image)
     .then(response => response.json())
     .then(data => {
       this.setState({
-        image: data[0],
+        modalImage: data[0],
         showModal: true,
-        title: title,
-        description: description,
-        center: center,
-        date: date
+        modalTitle: title,
+        modalDescription: description,
+        modalCenter: center,
+        modalDate: date
       });
     })
+  }
+
+  exitModal = () => {
+    console.log('exit');
+    this.setState({
+      showModal: false
+    });
   }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <CardModal show={this.state.showModal} image={this.state.image} title={this.state.title} description={this.state.description} center={this.state.center} date={this.state.date}/>
+          <CardModal show={this.state.showModal} image={this.state.modalImage} title={this.state.modalTitle} description={this.state.modalDescription} center={this.state.modalCenter} date={this.state.modalDate} exitModal={this.exitModal}/>
           <Header signedIn={this.state.signedIn} />
           <Route path="/" exact strict component={Welcome} />
           <Route path="/search" exact render={(props) => (
             <div>
               <Search getImages={this.getImages} {...props} />
-              <Results results={this.state.results} hasNext={this.state.hasNext} hasPrev={this.state.hasPrev} showInfo = {this.showCardModal} />
+              <Results getPrev = {this.getPrevImages} getNext = {this.getNextImages} results={this.state.results} hasNext={this.state.hasNext} hasPrev={this.state.hasPrev} showInfo = {this.showCardModal} />
             </div>
           )} />
         </div>

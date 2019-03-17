@@ -7,7 +7,32 @@
     background-color: rgba(0,0,0,.5);
     z-index: 3;
 }
-
+.exitModal {
+    position: absolute;
+    top: 2px;
+    right: 0px;
+    padding: 5px;
+    padding-top: 5px;
+    border: none;
+    background: white;
+    color: #061f4a;
+    font-size: 16px;
+    border: none;
+    transition: 0.3s all ease-in-out;
+}
+.exitModal:hover {
+    color: #dd361c;
+    padding-left: 0px;
+    padding-right: 10px;
+    outline: none;
+    cursor: pointer;
+}
+.exitModal:active {
+    outline: none;
+}
+.exitModal:focus {
+    outline: none;
+}
 .modalContainer {
     display: flex;
     flex-direction: row;
@@ -35,9 +60,19 @@
     flex: 1 1 0;
     margin: 10px;
     overflow: scroll;
+    overflow-x: hidden;
 }
 
 .modalImageResult {
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
+}
+
+.modalImageResult:hover{
+    cursor: pointer;
+}
+
+.alignLeft {
+    text-align: left;
 }

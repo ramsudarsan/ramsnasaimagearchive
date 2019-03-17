@@ -38,7 +38,7 @@ class Search extends Component {
 
     showHide = (e) => {
         e.preventDefault();
-        if (this.state.hidden === ''){
+        if (this.state.hidden === '') {
             this.setState({
                 hidden: 'hidden',
                 buttonText: 'Refine Search'
@@ -57,11 +57,11 @@ class Search extends Component {
                 <form onSubmit={this.submitForm}>
                     <div className="searchContainerInside">
                         <div className="showHideContainer">
-                        <div className="searchDiv">
-                            <input className="search" type="text" name="q" placeholder="Search Term" onChange={this.updateSearch}></input>
-                            <label htmlFor="q">Search Term</label>
-                        </div>
-                        <button className="searchButton showHideButton" onClick={this.showHide}>{this.state.buttonText}</button>
+                            <div className="searchDiv">
+                                <input className="search" type="text" name="q" placeholder="Search Term" onChange={this.updateSearch}></input>
+                                <label htmlFor="q">Search Term</label>
+                            </div>
+                            <button className="searchButton showHideButton" onClick={this.showHide}>{this.state.buttonText}</button>
                         </div>
                         <div className={"additionalsearchparams " + this.state.hidden}>
                             <div className="searchDiv">
@@ -81,7 +81,7 @@ class Search extends Component {
                                 <label htmlFor="year_end">End Year</label>
                             </div>
                         </div>
-                        <input type="submit" className="searchButton submitButton" value="Submit" />
+                        <input type="submit" className="searchButton submitButton" value="Search" />
                     </div>
                 </form>
             </div>

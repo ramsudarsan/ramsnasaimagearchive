@@ -53,7 +53,7 @@ class ResultCard extends Component {
             return (null);
         }
         return (
-            <div className="resultCard" onClick={() => this.props.showInfo(this.props.image, this.state.title, this.props.description, this.props.center, this.props.date.substring(0,10))} >
+            <div className="resultCard" onClick={() => this.props.showInfo(this.props.image, this.props.title, this.props.description, this.props.center, this.props.date.substring(0,10))} >
                 <div className="imageHalf">
                     <img className="imageResult" src={this.state.image} />
                 </div>

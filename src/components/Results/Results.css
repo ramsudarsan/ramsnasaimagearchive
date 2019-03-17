@@ -1,6 +1,37 @@
 .resultsContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-auto-rows: 1fr;
     padding: 20px;
-    margin-top: 20px;
+}
+.buttonsContainer {
+    margin-top: 29px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.directionButton {
+    margin: 0px 5px;
+    font-family: 'Source Sans Pro', sans-serif;
+    height: 29px;
+    width: 192px;
+    border: 1px solid #061f4a;
+    background-color: #061f4a;
+    padding: 5px;
+    color: #fff;
+    transition: 0.3s all ease-in-out;
+}
+.directionButton:hover {
+    cursor: pointer;
+    background-color: #dd361c;
+    border: 1px solid #dd361c;
+}
+.directionButton:active {
+    background-color: white;
+    color: rgb(69, 83, 88);
+    outline: none;
+}
+.directionButton:focus {
+    outline: none;
 }

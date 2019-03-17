@@ -14,7 +14,11 @@
     padding-left: 40px;
     border-left: 10px solid #dd361c;
     border-right: 10px solid #fff;
+    cursor: pointer;
+}
 
+.resultCard:active{
+    border-left: 10px solid #02bfe7;
 }
 
 .imageHalf {

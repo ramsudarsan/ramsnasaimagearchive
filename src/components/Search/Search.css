@@ -1,5 +1,8 @@
 .searchContainer {
+    margin: 0px 40px;
     margin-top: 30px;
+    padding: 30px;
+    background-color: white;
     font-family: 'Source Sans Pro', sans-serif;
 }
 .searchDiv {
@@ -21,9 +24,9 @@
     position: relative;
     margin: 0px 5px;
     border: none;
-    border-left: 7px solid #fff;
-    border-right: 7px solid #fff;
-    background: white;
+    border-left: 7px solid rgb(240, 240, 240);
+    border-right: 7px solid rgb(240, 240, 240);
+    background: rgb(240, 240, 240);
     padding: 6px 5px;
     z-index: 2;
     font-family: 'Source Sans Pro', sans-serif;
@@ -35,7 +38,7 @@ label {
     text-align: left;
     display: block;
     position: relative;
-    color: rgb(69, 83, 88);
+    color: rgb(55, 66, 70);
     z-index: 1;
     top: -20px;
     transition: all 0.1s linear;
@@ -64,10 +67,16 @@ label {
     background-color: #061f4a;
     padding: 5px;
     color: #fff;
+    transition: 0.3s all ease-in-out;
+}
+.searchButton:hover {
+    cursor: pointer;
+    background-color: #dd361c;
+    border: 1px solid #dd361c;
 }
 .searchButton:active {
-    background-color: white;
-    color: rgb(69, 83, 88);
+    background-color: rgb(240, 240, 240);
+    color: rgb(55, 66, 70);
     outline: none;
 }
 .searchButton:focus {
@@ -76,4 +85,8 @@ label {
 .showHideButton {
     position: relative;
     top: -30px;
+}
+
+.showHideButton:hover {
+    cursor: pointer;
 }
