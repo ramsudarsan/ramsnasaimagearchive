@@ -176,7 +176,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           <CardModal show={this.state.showModal} image={this.state.modalImage} title={this.state.modalTitle} description={this.state.modalDescription} center={this.state.modalCenter} date={this.state.modalDate} exitModal={this.exitModal} />
           <Header />
