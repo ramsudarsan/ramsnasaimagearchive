@@ -1,0 +1,23 @@
+.WelcomeContainer {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.InstructionContainer {
+    margin: 10px 40px;
+    padding: 30px;
+    max-width: 1000px;
+    background-color:white;
+    text-align: left;
+}
+
+.MainWelcomeContainer {
+    padding: 10px;
+}
+
+.EnterButtonHolder {
+    text-align: center;
+}

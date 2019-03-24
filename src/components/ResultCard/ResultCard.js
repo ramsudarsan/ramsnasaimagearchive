@@ -7,11 +7,17 @@ class ResultCard extends Component {
         this.state = {
             image: '',
             title: '',
-            descriptionChars: 125
+            descriptionChars: 125,
+            description: ''
         }
     }
 
     componentDidMount() {
+        if (this.props.description) {
+            this.setState({
+                description: this.props.description
+            });
+        }
         if (this.props.title.length > 37) {
             this.setState({
                 title: this.props.title.substring(0, 37) + '...'
@@ -59,7 +65,7 @@ class ResultCard extends Component {
                 </div>
                 <div className="detailHalf">
                     <h2>{this.state.title}</h2>
-                    <p>Description: {this.props.description.substring(0, this.state.descriptionChars) + '...'}</p>
+                    <p>Description: {this.state.description.substring(0, this.state.descriptionChars) + '...'}</p>
                     <p>Center: {this.props.center}</p>
                     <p>Date: {this.props.date.substring(0, 10)}</p>
                 </div>
