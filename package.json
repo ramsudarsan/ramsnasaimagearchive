@@ -2,7 +2,9 @@
   "name": "ramsnasaimagearchive",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ramsudarsan.github.io/ramsnasaimagearchive",
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "query-string": "^6.4.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -11,6 +13,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
